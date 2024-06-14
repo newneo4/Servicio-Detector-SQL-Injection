@@ -2,7 +2,7 @@ absl-py==0.14.1
 astunparse==1.6.3
 blinker==1.4
 certifi==2021.10.8
-charset-normalizer==2.4.1
+charset-normalizer==2.0.10  # Cambié la versión aquí
 click==8.0.3
 colorama==0.4.4
 Flask==2.0.2
