@@ -20,6 +20,14 @@ try:
 except FileNotFoundError:
     print("El archivo del modelo no se encontró. Asegúrate de haber guardado el modelo previamente.")
     exit(1)
+    
+@app.route('/')
+def index():
+    return """
+    <h1>Bienvenido a la API de Predicción de SQL Injection</h1>
+    <p>Esta API predice si una consulta SQL puede ser un intento de inyección SQL.</p>
+    <p>Para realizar una predicción, envía una solicitud POST a /prediccion con un JSON que contenga el parámetro 'query'.</p>
+    """
 
 @app.route('/prediccion', methods=['POST'])
 def prediccion():
