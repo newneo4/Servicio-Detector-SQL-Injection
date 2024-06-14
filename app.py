@@ -7,27 +7,21 @@ import numpy as np
 app = Flask(__name__)
 
 # Cargar el vectorizador guardado
-try:
+def load_vectorizer():
     with open('vectorizer.pkl', 'rb') as f:
-        vectorizer = pickle.load(f)
-except FileNotFoundError:
-    print("El archivo vectorizer.pkl no se encontró. Asegúrate de haber guardado el vectorizador previamente.")
-    exit(1)
+        return pickle.load(f)
+
+vectorizer = load_vectorizer()
 
 # Cargar el modelo entrenado (suponiendo que sea un modelo de TensorFlow Keras)
-try:
-    model = load_model('sql_injection_model2.h5')  
-except FileNotFoundError:
-    print("El archivo del modelo no se encontró. Asegúrate de haber guardado el modelo previamente.")
-    exit(1)
-    
+def load_trained_model():
+    return load_model('sql_injection_model2.h5')
+
+model = load_trained_model()
+
 @app.route('/')
 def index():
-    return """
-    <h1>Bienvenido a la API de Predicción de SQL Injection</h1>
-    <p>Esta API predice si una consulta SQL puede ser un intento de inyección SQL.</p>
-    <p>Para realizar una predicción, envía una solicitud POST a /prediccion con un JSON que contenga el parámetro 'query'.</p>
-    """
+    return 'Bienvenido a la API de predicción de SQL Injection. Utilice el endpoint /prediccion para obtener predicciones.'
 
 @app.route('/prediccion', methods=['POST'])
 def prediccion():
