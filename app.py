@@ -3,8 +3,10 @@ import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from tensorflow.keras.models import load_model
 import numpy as np
+from flasgger import Swagger
 
 app = Flask(__name__)
+swagger = Swagger(app)
 
 # Cargar el vectorizador guardado
 def load_vectorizer():
@@ -21,10 +23,62 @@ model = load_trained_model()
 
 @app.route('/')
 def index():
+    """
+    Bienvenido a la API de predicción de SQL Injection.
+    ---
+    responses:
+      200:
+        description: Página de inicio de la API
+    """
     return 'Bienvenido a la API de predicción de SQL Injection. Utilice el endpoint /prediccion para obtener predicciones.'
 
 @app.route('/prediccion', methods=['POST'])
 def prediccion():
+    """
+    Endpoint para obtener una predicción de SQL Injection.
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          required:
+            - query
+          properties:
+            query:
+              type: string
+              description: La consulta SQL para analizar
+              example: "SELECT * FROM users WHERE id = 1"
+    responses:
+      200:
+        description: Resultado de la predicción
+        schema:
+          type: object
+          properties:
+            prediccion:
+              type: integer
+              description: La predicción, 0 o 1
+              example: 1
+      400:
+        description: Error en la solicitud
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              description: Mensaje de error
+              example: "No se encontró la consulta en los datos JSON"
+      500:
+        description: Error interno del servidor
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+              description: Mensaje de error
+              example: "Error al realizar la predicción"
+    """
     data = request.get_json()
 
     if 'query' not in data:

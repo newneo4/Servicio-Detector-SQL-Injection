@@ -1,5 +1,8 @@
+flasgger
 Flask
+h5py
+joblib
+keras
+numpy
 scikit-learn
 tensorflow
-numpy
-gunicorn
