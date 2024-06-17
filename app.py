@@ -3,10 +3,24 @@ import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from tensorflow.keras.models import load_model
 import numpy as np
+from flask_swagger_ui import get_swaggerui_blueprint
+
 
 app = Flask(__name__)
 
-# Cargar el vectorizador y el modelo
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.json'
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL, 
+    API_URL,
+    config={  
+        'app_name': "Test application"
+    },
+)
+
+app.register_blueprint(swaggerui_blueprint)
+
 def load_vectorizer():
     with open('vectorizer.pkl', 'rb') as f:
         return pickle.load(f)
@@ -18,7 +32,6 @@ def load_trained_model():
 
 model = load_trained_model()
 
-# Ruta para la predicción de SQL injection
 @app.route('/prediccion', methods=['POST'])
 def prediccion():
     data = request.get_json()
