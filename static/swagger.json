@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Detector SQL Injection Service",
+    "description": "This service is designed to detect and prevent SQL injection attacks in web applications. SQL injection is a code injection technique that can destroy your database. This service helps secure your application by monitoring, analyzing, and identifying potential SQL injection attempts in real-time.\n\nKey features:\n- **Real-time Monitoring**: Continuously scans your application for suspicious SQL queries.\n- **Detailed Analysis**: Provides in-depth analysis of detected threats with contextual information.\n- **Reporting and Alerts**: Generates reports and sends alerts for any potential SQL injection attempts.\n- **Easy Integration**: Seamlessly integrates with various databases and web applications.\n\nStay protected from one of the most common and dangerous web application vulnerabilities with the Detector SQL Injection Service.",
+    "termsOfService": "https://github.com/newneo4/Servicio-Detector-SQL-Injection/blob/main/LICENSE",
+    "contact": {
+      "email": "noel123mch@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "prediction",
+      "description": "SQL Injection Prediction Operations",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/newneo4/Servicio-Detector-SQL-Injection"
+      }
+    }
+  ],
+  "paths": {
+    "/prediccion": {
+      "post": {
+        "tags": [
+          "prediction"
+        ],
+        "summary": "Get SQL Injection Prediction",
+        "description": "Obtain a prediction for a given SQL query to determine if it is potentially malicious.",
+        "operationId": "getPrediction",
+        "requestBody": {
+          "description": "Provide a SQL query to get the prediction result",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "SELECT * FROM users WHERE id = '1' OR '1'='1';"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful prediction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prediccion": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "No se encontró la consulta en los datos JSON"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Error al realizar la predicción: ..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
