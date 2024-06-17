@@ -1,4 +1,3 @@
-flasgger
 Flask
 h5py
 joblib
@@ -6,3 +5,4 @@ keras
 numpy
 scikit-learn
 tensorflow
+flask_swagger_ui
