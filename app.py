@@ -60,5 +60,23 @@ def prediccion():
     except ValueError as ve:
         return jsonify({"error": f"Error al realizar la predicción: {ve}"}), 500
 
+@app.route('/testing', methods=['POST'])
+def testing():
+    data = request.get_json()
+
+    if not data or 'query' not in data:
+        return jsonify({"error": "No se encontró 'query' en los datos JSON"}), 400
+
+    query = data['query']
+
+    try:
+        query_value = int(query)
+    except ValueError:
+        return jsonify({"error": "'query' debe ser un número entero"}), 400
+
+    response = {"respuesta": query_value * 2}
+    return jsonify(response), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
