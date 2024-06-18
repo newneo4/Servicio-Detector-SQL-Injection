@@ -6,3 +6,4 @@ numpy
 scikit-learn
 tensorflow
 flask_swagger_ui
+gunicorn
